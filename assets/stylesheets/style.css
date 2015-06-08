@@ -1,0 +1,285 @@
+* {
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  font-family: 'CircularStd', 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  outline: none;
+}
+
+a {
+  cursor: pointer;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #434343;
+  font-size: 11em;
+}
+
+.business-cards-wrapper {
+  height: 3.4646em;
+  width: 2.3228em;
+  perspective: 1000;
+}
+
+/* Helper methods */
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.center-rel {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.safe-padding {
+  width: 100%;
+  padding-left: 0.16em;
+  padding-right: 0.16em;
+}
+
+.top-and-center {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.middle-and-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.business-card {
+  position: relative;
+  height: 3.4646em;
+  width: 2.3228em;
+  text-align: center;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+}
+
+.business-card.show-back {
+  transform: rotateY(180deg);
+}
+
+.business-card-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  left: 0;
+  background-color: #FFFFFF;
+  transform: rotateY(0deg);
+}
+
+.back {
+  right: 0;
+  transform: rotateY(180deg);
+}
+
+.front-icon {
+  position: relative;
+  margin-top: 0.745em;
+  height: 0.44em;
+  width: 0.44em;
+  border-radius: 50%;
+  border-width: 0.017em;
+  border-style: solid;
+}
+
+.bottom-section {
+  position: absolute;
+  height: 0.659em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.star {
+  height: 0.19em;
+  width: 0.19em;
+  display: block;
+  margin-top: -0.003em;
+}
+
+/* Text styles */
+
+/* Position of text */
+.name-position        { margin-top: 0.2002em; } /* 1.3852em */
+.title-position       { margin-top: 0.025em; } /* 1.6102em */
+.email-position       { margin-top: 0.15803em; } /* 1.8849em */
+.coupon-info-position { margin-top: 0.991567em; } /* 3.0098em */
+.coupon-code-position { margin-top: .027167em; } /* 3.1703em */
+
+/* Styling of text */
+.name,
+.title,
+.email,
+.coupon-info,
+.coupon-code {
+  line-height: 1.2;
+}
+
+.name {
+  font-size: 0.166666667em;
+  font-weight: bold;
+  color: #000000;
+}
+
+.title {
+  font-size: 0.097222222em;
+  text-transform: uppercase;
+  color: #9DACB5;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+}
+
+.email, .coupon-info, .coupon-code {
+  font-size: 0.111111111em;
+}
+
+.email {
+  color: #000000;
+  letter-spacing: 0.03em;
+}
+
+.coupon-info,
+.coupon-code {
+  color: #FFFFFF;
+}
+
+.coupon-info {
+   font-weight: bold;
+}
+
+.coupon-code {
+  font-style: italic;
+}
+
+.back-logo {
+  color: white;
+  display: block;
+}
+
+.left-side-controls, .right-side-controls {
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+}
+
+.left-side-controls {
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  margin-right: 20px;
+}
+
+.right-side-controls {
+  left: 100%;
+  margin-left: 20px;
+}
+
+.left-side-controls .fa, .right-side-controls .fa {
+  font-size: 1.75em;
+  color: #EEEEEE;
+}
+
+.side-switcher {
+  display: block;
+}
+
+.color-switcher {
+  position: relative;
+  margin-top: 1em;
+}
+
+.selected-color {
+  z-index: 1;
+}
+
+.color {
+  position: relative;
+  height: 25px;
+  width: 25px;
+  border-radius: 5px;
+}
+
+.non-selected-colors {
+  position: absolute;
+}
+
+.non-selected-color {
+  cursor: pointer;
+}
+
+.non-selected-colors,
+.non-selected-color + .non-selected-color {
+  margin-top: -25px;
+}
+
+.non-selected-colors, .non-selected-color {
+  transition: margin-top 0.33s cubic-bezier(.694, .0482, .335, 1);
+}
+
+.selected-color:hover + .non-selected-colors,
+.non-selected-colors:hover {
+  margin-top: 0;
+}
+
+.selected-color:hover + .non-selected-colors > .non-selected-color,
+.non-selected-colors:hover > .non-selected-color {
+  margin-top: 10px;
+}
+
+.kernable {
+  position: relative;
+  cursor: pointer;
+}
+
+.kernable:hover + .fa-pencil,
+.kernable + .fa-pencil:hover {
+  visibility: visible;
+  opacity: 0.5;
+  transition:
+    visibility 0s linear 0s,
+    opacity 0.33s cubic-bezier(.694, .0482, .335, 1);
+}
+
+.kernable + .fa-pencil {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: black;
+  opacity: 0;
+  cursor: pointer;
+  transition:
+    visibility 0s linear 0.33s,
+    opacity 0.33s cubic-bezier(.694, .0482, .335, 1);
+
+  margin-right: 0.5em;
+  display: block;
+}
