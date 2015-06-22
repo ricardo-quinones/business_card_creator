@@ -13,12 +13,12 @@ angular.module('BusinessCardCreator', [])
 
 .factory('Icons', function() {
   return [
-    'hi-wrench',
-    'hi-bottle',
-    'hi-brush',
-    'hi-bulb',
-    'hi-plunger',
-    'fa fa-binoculars'
+    {iconClass: 'hi-bottle',        content: '\e606'},
+    {iconClass: 'hi-brush',         content: '\e607'},
+    {iconClass: 'hi-bulb',          content: '\e608'},
+    {iconClass: 'hi-plunger',       content: '\e609'},
+    {iconClass: 'hi-wrench',        content: '\e60a'},
+    {iconClass: 'fa fa-binoculars', content: '\f1e5'}
   ];
 })
 
@@ -30,20 +30,31 @@ angular.module('BusinessCardCreator', [])
     couponInfo:    localStorage.getItem('bCardCreator.couponInfo') || '3-hour home cleaning for $29',
     coupon:        localStorage.getItem('bCardCreator.coupon') || 'Use code: COUPONCODE',
     selectedColor: localStorage.getItem('bCardCreator.selectedColor') || '#00CDED',
-    selectedIcon:  localStorage.getItem('bCardCreator.selectedIcon') || 'hi-wrench'
+    selectedIcon:  JSON.parse(localStorage.getItem('bCardCreator.selectedIcon')) || {iconClass: 'hi-wrench', content: '\e60a'}
   };
 })
 
 .controller('BusinessCardController',
-  ['$scope', '$window', 'Colors', 'Icons', 'LocalStorageValues',
-    function($scope, $window, Colors, Icons, LocalStorageValues) {
+  ['$scope', '$window', '$timeout', 'Colors', 'Icons', 'LocalStorageValues',
+    function($scope, $window, $timeout, Colors, Icons, LocalStorageValues) {
       // Set the colors and select the default one
-      $scope.colors        = Colors;
+      $scope.colors = Colors;
 
       // Set the icons and select the default one
-      $scope.icons        = Icons;
+      $scope.icons = Icons;
 
+      // Get the browser's local storage values
       $scope.dynamicContent = LocalStorageValues;
+
+      $scope.switchSides = function() {
+        $scope.back = !$scope.back;
+
+        if ($scope.back) {
+          $('.download').attr('download', 'business_card_back.jpeg');
+        } else {
+          $('.download').attr('download', 'business_card_front.jpeg');
+        }
+      };
 
       $scope.nonSelectedColors = function() {
         return _.reject($scope.colors, function(color) {
@@ -56,16 +67,91 @@ angular.module('BusinessCardCreator', [])
         localStorage.setItem('bCardCreator.selectedColor', color);
       };
 
+      $scope.setSelectedIcon = function(icon) {
+        $scope.dynamicContent.selectedIcon = icon;
+        localStorage.setItem('bCardCreator.selectedIcon', JSON.stringify(icon));
+      };
+
       $scope.downloadCard = function(e) {
-        html2canvas($(".business-card"), {
-          letterRendering: true,
+        var $printableBusinessCard, $link, fileName;
+
+        $link = $('.download');
+
+        if ($link.attr('href')) {
+          $timeout(function() { $link.attr('href', null); });
+          return true;
+        }
+
+        $printableBusinessCard = $('.printable-business-card');
+        $printableBusinessCard.show();
+        $printableBusinessCard.empty().html($(".business-card").clone());
+
+        if ($('.business-card').hasClass('show-back')) {
+          $('.front', $printableBusinessCard).hide();
+          $('.back', $printableBusinessCard).show();
+        } else {
+          $('.front', $printableBusinessCard).show();
+          $('.back', $printableBusinessCard).hide();
+        }
+
+        html2canvas($printableBusinessCard, {
           onrendered: function(canvas) {
-            // var imgData = canvas.toDataURL('image/png');
-            // var link    = angular.element(e.target).parent();
-            // link.download = imgData;
-            $window.open(canvas.toDataURL('image/png'));
+            ctx = canvas.getContext('2d');
+
+            if ($('.business-card').hasClass('show-back')) {
+              // Set the Handy logo onto the canvas
+              $scope.setHandyIconOnCanvas(ctx, $printableBusinessCard);
+            } else {
+              // Set the selected icon onto the canvas
+              $scope.setIconOnCanvas(ctx, $printableBusinessCard);
+
+              // Set the star onto the canvas
+              $scope.setStarOnCanvas(ctx, $printableBusinessCard);
+            }
+
+            var image = canvas.toDataURL('image/jpeg');
+            $printableBusinessCard.hide();
+            $link.attr('href', image.replace(/^data:image\/[^;]/, 'data:application/octet-stream'));
+            $link[0].click();
           }
         });
+      };
+
+      $scope.setIconOnCanvas = function(ctx, $printableBusinessCard) {
+        var font, $icon, ctxXCoord, ctxYCoord, iconContent;
+        $icon            = $('.front-icon', $printableBusinessCard);
+        font             = $('i', $icon).css('font').match(/handy|FontAwesome/)[0];
+        ctxXCoord        = $printableBusinessCard.outerWidth() / 2;
+        ctxYCoord        = parseFloat(window.getComputedStyle($icon[0])['margin-top']) + ($icon.outerHeight() / 2);
+        ctx.fillStyle    = $scope.dynamicContent.selectedColor;
+        ctx.font         = $('i', $icon).outerHeight() + 'px ' + font;
+        ctx.textBaseline = 'middle';
+        ctx.textAlign    = 'center';
+        ctx.fillText(String.fromCharCode("0x" + $scope.dynamicContent.selectedIcon.content), ctxXCoord, ctxYCoord);
+      };
+
+      $scope.setStarOnCanvas = function(ctx, $printableBusinessCard) {
+        var font, $icon, ctxXCoord, ctxYCoord;
+        $star            = $('.hi-star', $printableBusinessCard);
+        ctxXCoord        = $printableBusinessCard.outerWidth() / 2;
+        ctxYCoord        = $star.offset().top - $printableBusinessCard.offset().top;
+        ctx.fillStyle    = 'white';
+        ctx.font         = $star.outerHeight() + 'px handy';
+        ctx.textBaseline = 'top';
+        ctx.textAlign    = 'center';
+        ctx.fillText('\ue62d', ctxXCoord, ctxYCoord);
+      };
+
+      $scope.setHandyIconOnCanvas = function(ctx, $printableBusinessCard) {
+        var font, $icon, ctxXCoord, ctxYCoord;
+        $logo            = $('.hi-logo', $printableBusinessCard);
+        ctxXCoord        = $printableBusinessCard.outerWidth() / 2;
+        ctxYCoord        = $printableBusinessCard.outerHeight() / 2;
+        ctx.fillStyle    = 'white';
+        ctx.font         = $logo.outerHeight() + 'px handy';
+        ctx.textBaseline = 'middle';
+        ctx.textAlign    = 'center';
+        ctx.fillText('\ue60c', ctxXCoord, ctxYCoord);
       };
 }])
 

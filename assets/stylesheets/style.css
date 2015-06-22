@@ -40,6 +40,7 @@ ul, li {
 }
 
 .center-rel {
+  position: relative;
   margin-left: auto;
   margin-right: auto;
 }
@@ -64,11 +65,14 @@ ul, li {
   transform: translate(-50%, -50%);
 }
 
-.business-card {
+.business-card, .printable-business-card {
   position: relative;
   height: 3.4646em;
   width: 2.3228em;
   text-align: center;
+}
+
+.business-card {
   transition: 0.6s;
   transform-style: preserve-3d;
 }
@@ -98,13 +102,14 @@ ul, li {
 }
 
 .front-icon {
-  position: relative;
   margin-top: 0.745em;
   height: 0.44em;
   width: 0.44em;
-  border-radius: 50%;
+  line-height: 0.44em;
+  border-radius: 0.22em;
   border-width: 0.017em;
   border-style: solid;
+  text-align: center;
 }
 
 .bottom-section {
@@ -116,10 +121,18 @@ ul, li {
 }
 
 .star {
-  height: 0.19em;
-  width: 0.19em;
+  position: absolute;
+  bottom: 0.659em;
+  left: 0;
+  right: 0;
   display: block;
-  margin-top: -0.003em;
+  margin-bottom: -0.091em;
+  color: white;
+}
+
+.star .hi-star {
+  font-size: 0.189988636em;
+  display: block;
 }
 
 /* Text styles */
@@ -151,7 +164,6 @@ ul, li {
   text-transform: uppercase;
   color: #9DACB5;
   font-weight: bold;
-  letter-spacing: 0.03em;
 }
 
 .email, .coupon-info, .coupon-code {
@@ -160,7 +172,6 @@ ul, li {
 
 .email {
   color: #000000;
-  letter-spacing: 0.03em;
 }
 
 .coupon-info,
@@ -193,6 +204,7 @@ ul, li {
   top: 0;
   right: 100%;
   margin-right: 20px;
+  text-align: center;
 }
 
 .right-side-controls {
@@ -209,13 +221,30 @@ ul, li {
   display: block;
 }
 
-.color-switcher {
+.color-switcher, .icon-switcher {
   position: relative;
   margin-top: 1em;
+  display: inline-block;
 }
 
-.selected-color {
+.color-switcher {
+  min-width: 25px;
+  min-height: 25px;
   z-index: 1;
+}
+
+.icon-switcher {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.color.selected, .icon.selected {
+  cursor: pointer;
+  z-index: 1;
+}
+
+.icon.selected {
+  opacity: 1;
 }
 
 .color {
@@ -225,8 +254,27 @@ ul, li {
   border-radius: 5px;
 }
 
+.icon {
+  text-align: center;
+  cursor: pointer;
+  height: 50px;
+  line-height: 50px;
+  opacity: 0;
+}
+
+.icon > i {
+  font-size: 46px;
+  color: #EEE;
+  vertical-align: middle;
+}
+
+.icon + .icon {
+  margin-top: -50px;
+}
+
 .non-selected-colors {
   position: absolute;
+  background-color: #434343;
 }
 
 .non-selected-color {
@@ -238,18 +286,30 @@ ul, li {
   margin-top: -25px;
 }
 
-.non-selected-colors, .non-selected-color {
+.non-selected-colors,
+.non-selected-color {
   transition: margin-top 0.33s cubic-bezier(.694, .0482, .335, 1);
 }
 
-.selected-color:hover + .non-selected-colors,
+.icon {
+  transition:
+    margin-top 0.33s cubic-bezier(.694, .0482, .335, 1),
+    opacity 0.33s cubic-bezier(.694, .0482, .335, 1);
+}
+
+.color.selected:hover + .non-selected-colors,
 .non-selected-colors:hover {
   margin-top: 0;
 }
 
-.selected-color:hover + .non-selected-colors > .non-selected-color,
-.non-selected-colors:hover > .non-selected-color {
+.color.selected:hover + .non-selected-colors > .non-selected-color,
+.non-selected-colors:hover > .non-selected-color,
+.icons:hover > .icon + .icon {
   margin-top: 10px;
+}
+
+.icons:hover > .icon {
+  opacity: 1;
 }
 
 .kernable {
@@ -282,4 +342,16 @@ ul, li {
 
   margin-right: 0.5em;
   display: block;
+}
+
+.printable-business-card {
+  font-size: 4em;
+  /* transform: rotateY(180deg); */
+  display: none;
+}
+
+.printable-business-card .front-icon i,
+.printable-business-card .star,
+.printable-business-card .hi-logo {
+  visibility: hidden;
 }

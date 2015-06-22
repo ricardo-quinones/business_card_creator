@@ -14,22 +14,28 @@
 
       <!-- The switches from front to back -->
       <div class="left-side-controls">
-        <a class="side-switcher" ng-click="back = !back">
+        <a class="side-switcher" ng-click="switchSides()">
           <i class="fa fa-undo"></i>
         </a>
 
         <div class="color-switcher">
           <!-- The currently selected color -->
-          <div class="color selected-color" ng-style="{'background-color': dynamicContent.selectedColor}"></div>
+          <div class="color selected" ng-style="{'background-color': dynamicContent.selectedColor}"></div>
 
           <ul class="non-selected-colors">
             <li ng-repeat="color in nonSelectedColors()" class="color non-selected-color" ng-style="{'background-color': color}" ng-click="setSelectedColor(color)"></li>
           </ul>
         </div>
+
+        <div class="icon-switcher">
+          <ul class="icons">
+            <li ng-repeat="icon in icons" class="icon" ng-class="{selected: dynamicContent.selectedIcon.iconClass == icon.iconClass}" ng-click="setSelectedIcon(icon)"><i ng-class="icon.iconClass"></i></li>
+          </ul>
+        </div>
       </div>
 
       <div class="right-side-controls">
-        <a class="download" ng-click="downloadCard($event)">
+        <a class="download" ng-click="downloadCard($event)" download="business_card_front.jpeg">
           <i class="fa fa-download"></i>
         </a>
 
@@ -38,12 +44,13 @@
         </a>
       </div>
 
+      <div class="printable-business-card"></div>
       <div class="business-card", ng-class="{'show-back': back}">
         <div class="business-card-side front">
 
           <!-- Icon on business card -->
           <div class="front-icon center-rel" ng-style="{'border-color': dynamicContent.selectedColor, color: dynamicContent.selectedColor}">
-            <i class="icon-positioning-and-sizing" ng-class="dynamicContent.selectedIcon"></i>
+            <i class="icon-positioning-and-sizing" ng-class="dynamicContent.selectedIcon.iconClass"></i>
           </div>
 
           <!-- Name on business card -->
@@ -63,8 +70,9 @@
 
           <!-- Bottom section -->
           <div class="bottom-section" ng-style="{'background-color': dynamicContent.selectedColor}">
-            <img src="assets/images/white-star.svg" alt="" class="star top-and-center">
           </div>
+
+          <div class="star"><i class="hi-star"></i></div>
 
           <!-- Bottom section text -->
           <div class="coupon-info-position center-rel safe-padding">

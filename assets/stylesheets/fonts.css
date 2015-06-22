@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "handy";
-  src:url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.6.eot");
-  src:url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.6.eot?#iefix") format("embedded-opentype"),
-    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.6.svg#handy") format("svg"),
-    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.6.ttf") format("truetype"),
-    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.6.woff") format("woff");
+  src:url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.9.eot");
+  src:url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.9.eot?#iefix") format("embedded-opentype"),
+    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.9.svg#handy") format("svg"),
+    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.9.ttf") format("truetype"),
+    url("http://d35def25at2mtm.cloudfront.net/fonts/handy_v1.9.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -28,15 +28,15 @@
 /* Handy font custom positioning */
 .icon-positioning-and-sizing {
   display: block;
+  font-size: 0.31em;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
+  left: 50%;
 }
 
-.icon-positioning-and-sizing[class^="hi-"],
-.icon-positioning-and-sizing[class*=" hi-"] {
-  font-size: 0.31em;
+.icon-positioning-and-sizing:before {
+  display: block;
 }
 
 .icon-positioning-and-sizing.fa {
@@ -49,6 +49,7 @@
 .hi-bulb:before    { content: "\e608"; }
 .hi-plunger:before { content: "\e609"; }
 .hi-wrench:before  { content: "\e60a"; }
+.hi-star:before    { content: "\e62d"; }
 
 /* The Handy logo */
 .hi-logo:before { content: "\e60c"; }
