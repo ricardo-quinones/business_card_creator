@@ -49,7 +49,7 @@
         <div class="business-card-side front">
 
           <!-- Icon on business card -->
-          <div class="front-icon center-rel" ng-style="{'border-color': dynamicContent.selectedColor, color: dynamicContent.selectedColor}">
+          <div class="front-icon center-rel transition-icon-color" ng-style="{'border-color': dynamicContent.selectedColor, color: dynamicContent.selectedColor}">
             <i class="icon-positioning-and-sizing" ng-class="dynamicContent.selectedIcon.iconClass"></i>
           </div>
 
@@ -69,7 +69,7 @@
           </div>
 
           <!-- Bottom section -->
-          <div class="bottom-section" ng-style="{'background-color': dynamicContent.selectedColor}">
+          <div class="bottom-section transition-background-color" ng-style="{'background-color': dynamicContent.selectedColor}">
           </div>
 
           <div class="star"><i class="hi-star"></i></div>
@@ -85,7 +85,7 @@
         </div>
 
         <!-- Back of the business card -->
-        <div class="business-card-side back" ng-style="{'background-color': dynamicContent.selectedColor}">
+        <div class="business-card-side back transition-background-color" ng-style="{'background-color': dynamicContent.selectedColor}">
           <i class="hi-logo back-logo middle-and-center"></i>
         </div>
       </div>

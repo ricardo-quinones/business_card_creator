@@ -355,3 +355,13 @@ ul, li {
 .printable-business-card .hi-logo {
   visibility: hidden;
 }
+
+.transition-icon-color {
+  transition:
+    color 0.33s cubic-bezier(.694, .0482, .335, 1),
+    border-color 0.33s cubic-bezier(.694, .0482, .335, 1);
+}
+
+.transition-background-color {
+  transition: background-color 0.33s cubic-bezier(.694, .0482, .335, 1);
+}

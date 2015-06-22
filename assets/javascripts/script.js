@@ -13,12 +13,12 @@ angular.module('BusinessCardCreator', [])
 
 .factory('Icons', function() {
   return [
-    {iconClass: 'hi-bottle',        content: '\e606'},
-    {iconClass: 'hi-brush',         content: '\e607'},
-    {iconClass: 'hi-bulb',          content: '\e608'},
-    {iconClass: 'hi-plunger',       content: '\e609'},
-    {iconClass: 'hi-wrench',        content: '\e60a'},
-    {iconClass: 'fa fa-binoculars', content: '\f1e5'}
+    {iconClass: 'hi-bottle',        content: 'e606'},
+    {iconClass: 'hi-brush',         content: 'e607'},
+    {iconClass: 'hi-bulb',          content: 'e608'},
+    {iconClass: 'hi-plunger',       content: 'e609'},
+    {iconClass: 'hi-wrench',        content: 'e60a'},
+    {iconClass: 'fa fa-binoculars', content: 'f1e5'}
   ];
 })
 
