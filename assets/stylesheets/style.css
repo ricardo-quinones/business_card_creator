@@ -219,6 +219,28 @@ ul, li {
 
 .side-switcher {
   display: block;
+  position: relative;
+}
+
+.side-switcher:before, .side-switcher:after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  background-color: #eee;
+  left: 50%;
+}
+
+.side-switcher:before {
+  height: 55%;
+}
+
+.side-switcher:after {
+    top: 77%;
+    height: 35%;
+}
+
+.side-switcher i {
+  transform: rotateX(63deg) rotateZ(101deg);
 }
 
 .color-switcher, .icon-switcher {
@@ -346,7 +368,6 @@ ul, li {
 
 .printable-business-card {
   font-size: 4em;
-  /* transform: rotateY(180deg); */
   display: none;
 }
 
